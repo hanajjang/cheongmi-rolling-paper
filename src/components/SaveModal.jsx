@@ -5,11 +5,15 @@ export default function SaveModal({ onClose }) {
   const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
-    // boardRef 대신 전체 페이지에서 헤더+보드 영역 캡처
-    const target = document.getElementById('capture-area');
-    if (!target) return;
+  const target = document.getElementById('capture-area');
+  if (!target) return;
 
-    setLoading(true);
+  setLoading(true);
+
+  // 모달 먼저 닫고 약간 기다린 후 캡처
+  onClose();
+
+  setTimeout(async () => {
     try {
       const dataUrl = await toPng(target, {
         cacheBust: true,
@@ -21,13 +25,11 @@ export default function SaveModal({ onClose }) {
       link.download = 'cheongmi-rolling-paper-2026.png';
       link.href     = dataUrl;
       link.click();
-      onClose();
     } catch {
       alert('이미지 저장에 실패했어요. 다시 시도해주세요.');
-    } finally {
-      setLoading(false);
     }
-  };
+  }, 300); // 모달 닫힌 후 300ms 뒤 캡처
+};
 
   return (
     <div onClick={(e) => e.target === e.currentTarget && onClose()} style={{
