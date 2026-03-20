@@ -4,23 +4,37 @@ import { toPng } from 'html-to-image';
 export default function SaveModal({ onClose }) {
   const [loading, setLoading] = useState(false);
 
-  const handleSave = async () => {
+const handleSave = async () => {
   const target = document.getElementById('capture-area');
   if (!target) return;
 
-  setLoading(true);
-
-  // 모달 먼저 닫고 약간 기다린 후 캡처
   onClose();
 
   setTimeout(async () => {
     try {
+      // 캡처 전 헤더 backdrop-filter 임시 제거
+      const header = target.querySelector('header');
+      const originalBackdrop = header ? header.style.backdropFilter : '';
+      const originalBg = header ? header.style.background : '';
+
+      if (header) {
+        header.style.backdropFilter = 'none';
+        header.style.background = 'rgba(255,250,246,1)'; // 완전 불투명으로
+      }
+
       const dataUrl = await toPng(target, {
         cacheBust: true,
         backgroundColor: '#faf7f2',
         pixelRatio: 2,
         skipFonts: true,
       });
+
+      // 캡처 후 원복
+      if (header) {
+        header.style.backdropFilter = originalBackdrop;
+        header.style.background = originalBg;
+      }
+
       const link    = document.createElement('a');
       link.download = 'cheongmi-rolling-paper-2026.png';
       link.href     = dataUrl;
@@ -28,7 +42,7 @@ export default function SaveModal({ onClose }) {
     } catch {
       alert('이미지 저장에 실패했어요. 다시 시도해주세요.');
     }
-  }, 300); // 모달 닫힌 후 300ms 뒤 캡처
+  }, 300);
 };
 
   return (
