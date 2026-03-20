@@ -190,13 +190,14 @@ export default function App() {
           onDelete={() => { setDetailTarget(null); setEditTarget({ ...detailTarget, defaultTab: 'delete' }); }}
         />
       )}
-      {editTarget && (
-        <EditModal
-          message={editTarget}
-          onClose={() => setEditTarget(null)}
-          onSuccess={() => { setEditTarget(null); refetch(); }}
-        />
-      )}
+     {editTarget && (
+  <EditModal
+    message={editTarget}
+    defaultTab={editTarget.defaultTab || 'edit'}
+    onClose={() => setEditTarget(null)}
+    onSuccess={() => { setEditTarget(null); refetch(); }}
+  />
+)}
       {showSave && (
         <SaveModal
           boardRef={boardRef}
