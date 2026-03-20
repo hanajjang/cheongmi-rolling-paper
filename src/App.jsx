@@ -24,8 +24,7 @@ return (
 
       {/* 헤더 */}
       <header style={{
-        background: 'rgba(255,250,246,0.92)',
-        backdropFilter: 'blur(10px)',
+        background: 'rgba(255,250,246,1)',
         borderBottom: '1px solid rgba(220,180,160,0.3)',
         padding: '14px 20px',
         display: 'flex',
