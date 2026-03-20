@@ -7,8 +7,8 @@ const COLOR_MAP = {
 };
 const GAS_URL = process.env.REACT_APP_GAS_URL;
 
-export default function EditModal({ message, onClose, onSuccess }) {
-  const [tab, setTab]         = useState('edit'); // 'edit' | 'delete'
+export default function EditModal({ message, onClose, onSuccess, defaultTab = 'edit' }) {
+  const [tab, setTab] = useState(defaultTab); // 'edit' | 'delete'
   const [form, setForm]       = useState({ from: message.from, message: message.message, color: message.color, password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState('');
