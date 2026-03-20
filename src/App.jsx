@@ -13,8 +13,8 @@ export default function App() {
   const [detailTarget, setDetailTarget] = useState(null);
   const boardRef = useRef(null);
 
-  return (
-    <div style={{ minHeight: '100vh' }}>
+return (
+  <div id="capture-area" style={{ minHeight: '100vh' }}>
 
       {/* 상단 무지개 줄 */}
       <div style={{
