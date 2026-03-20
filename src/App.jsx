@@ -199,11 +199,10 @@ return (
   />
 )}
       {showSave && (
-        <SaveModal
-          boardRef={boardRef}
-          onClose={() => setShowSave(false)}
-        />
-      )}
+  <SaveModal
+    onClose={() => setShowSave(false)}
+  />
+)}
     </div>
   );
 }
