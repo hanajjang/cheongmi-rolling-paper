@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { toPng } from 'html-to-image';
 
-export default function SaveModal({ boardRef, onClose }) {
+export default function SaveModal({ onClose }) {
   const [loading, setLoading] = useState(false);
 
   const handleSave = async () => {
-    if (!boardRef.current) return;
+    // boardRef 대신 전체 페이지에서 헤더+보드 영역 캡처
+    const target = document.getElementById('capture-area');
+    if (!target) return;
+
     setLoading(true);
     try {
-      const dataUrl = await toPng(boardRef.current, {
+      const dataUrl = await toPng(target, {
         cacheBust: true,
         backgroundColor: '#faf7f2',
         pixelRatio: 2,
+        skipFonts: true,
       });
       const link    = document.createElement('a');
       link.download = 'cheongmi-rolling-paper-2026.png';
@@ -48,7 +52,8 @@ export default function SaveModal({ boardRef, onClose }) {
           🖼️ 롤링페이퍼 이미지 저장
         </div>
         <div style={{ fontSize: 12, color: '#a08880', lineHeight: 1.7, marginBottom: 20 }}>
-          현재 보드 전체를 PNG로 저장합니다.<br />
+          헤더부터 메시지 보드까지<br />
+          전체를 PNG로 저장합니다.<br />
           파일명: cheongmi-rolling-paper-2026.png
         </div>
 
